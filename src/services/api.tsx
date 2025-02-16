@@ -7,7 +7,7 @@ export async function login(email: string, password: string) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password }), 
     });
 
     if (!response.ok) {
@@ -24,11 +24,12 @@ export async function login(email: string, password: string) {
   }
 }
 
-export async function register(userData: {
+export async function register(userData: { 
   login: string;
   email: string;
   password: string;
-  roles: string[];
+  cpf: string;
+  telefone: string;
   endereco: {
     rua: string;
     numero: string;
@@ -51,6 +52,7 @@ export async function register(userData: {
       throw new Error(errorMessage.message || "Erro ao cadastrar usuário");
     }
 
+    alert("Cadastro realizado com sucesso!");
     return await response.json();
   } catch (error) {
     console.error("Erro ao cadastrar:", error);
