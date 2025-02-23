@@ -3,7 +3,7 @@ import styled from "styled-components";
 const StyledButton = styled.button`
   width: 100%;
   padding: 12px;
-  background-color: #b22222;
+  background-color:#0066cc;
   color: white;
   font-size: 16px;
   border: none;
@@ -12,7 +12,7 @@ const StyledButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: #8b0000;
+    background-color: #0066cc;
   }
 `;
 

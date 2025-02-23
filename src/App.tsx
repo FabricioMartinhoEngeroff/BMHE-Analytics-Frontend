@@ -1,11 +1,11 @@
 import { GlobalStyles } from "./styles/GlobalStyles";
-import { Login } from "./pages/Login";
+import { AppRoutes } from "./route/AppRoutes"; // Importa as rotas
 
 function App() {
   return (
     <>
       <GlobalStyles />
-      <Login />
+      <AppRoutes /> 
     </>
   );
 }

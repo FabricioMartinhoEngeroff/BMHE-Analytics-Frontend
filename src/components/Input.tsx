@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ChangeEvent } from "react";
 
 const InputField = styled.input`
   width: 100%;
@@ -12,8 +13,14 @@ const InputField = styled.input`
 interface InputProps {
   type: string;
   placeholder: string;
+  name?: string;
+  value?: string; 
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export function Input({ type, placeholder }: InputProps) {
-  return <InputField type={type} placeholder={placeholder} />;
+export function Input({ type, placeholder, name, value, onChange }: InputProps) {
+  return (
+    <InputField type={type} placeholder={placeholder} name={name} value={value} onChange={onChange} />
+  );
 }
+
