@@ -1,6 +1,6 @@
 import { useState, useCallback, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { register } from "../module/auth/AuthService";
+import { register } from "../services/authService";
 import axios from "axios";
 
 export function useLoginForm() {
