@@ -1,8 +1,8 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
-export const API_URL = "http://localhost:8090/api";
+export const API_URL = "http://localhost:8091/api";
 
-// Configuração do axios com headers padrão
+// 🔹 Configuração global do Axios
 const api = axios.create({
   baseURL: API_URL,
   headers: {
@@ -10,7 +10,7 @@ const api = axios.create({
   },
 });
 
-// Interface para os dados de registro
+// 🔹 Interface para os dados de registro
 interface RegisterUserData {
   login: string;
   email: string;
@@ -19,7 +19,6 @@ interface RegisterUserData {
   telefone: string;
   endereco: {
     rua: string;
-    numero: string;
     bairro: string;
     cidade: string;
     estado: string;
@@ -27,71 +26,103 @@ interface RegisterUserData {
   };
 }
 
-// Função de login
+// 🔹 Função de login
 export async function login(email: string, password: string) {
   try {
+    console.log("🔍 Tentando login com:", { email, password });
+
     const response = await api.post("/auth/login", { email, password });
+
+    if (!response || !response.data) {
+      throw new Error("❌ Resposta inválida do servidor.");
+    }
+
+    console.log("✅ Login bem-sucedido:", response.data);
 
     localStorage.setItem("token", response.data.token);
     return response.data;
   } catch (error: unknown) {
+    console.error("❌ Erro no login:", error);
     handleApiError(error, "Erro ao realizar login.");
   }
 }
 
-// Função de cadastro
+// 🔹 Função de cadastro
 export async function register(userData: RegisterUserData) {
   try {
+    console.log("📤 Enviando dados de cadastro:", userData);
+
     const response = await api.post("/auth/register", userData);
+
+    if (!response || !response.data) {
+      throw new Error("❌ Resposta inválida do servidor.");
+    }
+
+    console.log("✅ Cadastro realizado com sucesso:", response.data);
     return response.data;
   } catch (error: unknown) {
+    console.error("❌ Erro no cadastro:", error);
     handleApiError(error, "Erro ao cadastrar usuário.");
   }
 }
-
-// Função para requisições autenticadas
+// 🔹 Função para requisições autenticadas
 export async function fetchWithAuth(url: string, options: RequestInit = {}) {
   const token = localStorage.getItem("token");
 
   if (!token) {
     alert("Sessão expirada. Faça login novamente.");
+    console.warn("⚠️ Token ausente, redirecionando para login...");
     window.location.href = "/login";
     return;
   }
 
-  const headers = {
-    ...options.headers,
-    Authorization: `Bearer ${token}`,
-    "Content-Type": "application/json",
-  };
-
   try {
-    const response = await fetch(`${API_URL}${url}`, { ...options, headers });
+    console.log(`📡 Fazendo requisição para: ${API_URL}${url}`);
 
-    if (response.status === 401) {
-      alert("Sessão expirada. Faça login novamente.");
-      localStorage.removeItem("token");
-      window.location.href = "/login";
-      return;
+    // Garantindo que os headers sejam compatíveis com Axios
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      ...((options.headers as Record<string, string>) || {}), // Conversão segura
+    };
+
+    const response = await api.get(url, { headers });
+
+    if (!response || !response.data) {
+      throw new Error("❌ Resposta inválida do servidor.");
     }
 
-    return await response.json();
+    console.log("✅ Resposta recebida:", response.data);
+    return response.data;
   } catch (error: unknown) {
+    console.error("❌ Erro na requisição autenticada:", error);
     handleApiError(error, "Erro ao buscar dados.");
   }
 }
 
-
+// 🔹 Função de tratamento de erro aprimorada
 function handleApiError(error: unknown, defaultMessage: string) {
-  if (error instanceof AxiosError) {
+  console.error("🚨 Erro na API:", error);
+
+  if (axios.isAxiosError(error)) {
+    console.log("📥 Resposta do servidor:", error.response);
+
+    if (error.response) {
+      console.error(`❌ Código de status: ${error.response.status}`);
+      console.error("📝 Dados da resposta:", error.response.data);
+    } else if (error.request) {
+      console.error("⚠️ Nenhuma resposta recebida do servidor");
+    }
+
     alert(error.response?.data?.message || defaultMessage);
   } else if (error instanceof Error) {
+    console.error("Erro desconhecido:", error.message);
     alert(error.message || defaultMessage);
   } else {
     alert(defaultMessage);
   }
+
   throw error;
 }
 
 export default register;
-

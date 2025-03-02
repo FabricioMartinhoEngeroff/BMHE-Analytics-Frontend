@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import logo from "../assets/logo.png"; // Adicione a logo no projeto
+import logo from "../assets/logo.png"; 
 
 const LogoContainer = styled.div`
   text-align: center;

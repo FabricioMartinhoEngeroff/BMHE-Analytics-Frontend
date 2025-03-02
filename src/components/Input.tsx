@@ -14,13 +14,24 @@ interface InputProps {
   type: string;
   placeholder: string;
   name?: string;
-  value?: string; 
+  value?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export function Input({ type, placeholder, name, value, onChange }: InputProps) {
+export function Input({
+  type,
+  placeholder,
+  name,
+  value,
+  onChange,
+}: InputProps) {
   return (
-    <InputField type={type} placeholder={placeholder} name={name} value={value} onChange={onChange} />
+    <InputField
+      type={type}
+      placeholder={placeholder}
+      name={name}
+      value={value}
+      onChange={onChange}
+    />
   );
 }
-
