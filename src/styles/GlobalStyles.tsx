@@ -9,7 +9,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    background-color: #f5f5f5;
+    background-color: #e3eefc;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,13 +21,15 @@ export const Container = styled.div`
   display: flex;
   height: 100vh;
   width: 100vw;
-  background-color: #f0f4f8;
-  overflow: auto;
+  background-color: #e3eefc;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const LeftPanel = styled.div`
   flex: 1;
-  background-color: #e1ecf7;
+  background-color: #e3eefc;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,13 +48,14 @@ export const RightPanel = styled.div`
 
 export const LoginBox = styled.div`
   width: 100%;
-  max-width: 700px;
-  padding: 30px;
+  max-width: 1000px;  
+  padding: 50px;  
   background: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   text-align: center;
 `;
+
 
 export const FormContainer = styled.div`
   display: flex;
@@ -60,24 +63,22 @@ export const FormContainer = styled.div`
   gap: 15px;
 `;
 
-// 🔹 Nova estrutura para cada linha de inputs
 export const Row = styled.div`
   display: flex;
-  gap: 15px;
+  gap: 10px;
   justify-content: space-between;
   width: 100%;
 `;
 
-// 🔹 Cada input ocupa 50% do espaço dentro da linha
-export const InputField = styled.div`
-   display: flex;
+export const InputField = styled.div<{ isError?: boolean }>`
+  display: flex;
   align-items: center;
-  border: 1px solid #ccc;
+  border: 1px solid ${({ isError }) => (isError ? "red" : "#ccc")};
   border-radius: 6px;
   padding: 12px;
   background: white;
   font-size: 18px;
-  width: 50%; /* 🔹 Reduzimos a largura para 50% */
+  width: 100%;
   box-sizing: border-box;
   position: relative;
 
@@ -87,18 +88,18 @@ export const InputField = styled.div`
     flex: 1;
     padding: 8px;
     font-size: 16px;
+    width: 100%;
   }
 
   svg {
     margin-right: 8px;
     color: #0066cc;
     font-size: 20px;
-    cursor: pointer;
   }
 `;
 
 export const Footer = styled.div`
-  margin-top: 15px;
+  margin-top: 20px; // Increased margin-top
   font-size: 16px;
   display: flex;
   justify-content: center;
@@ -106,9 +107,9 @@ export const Footer = styled.div`
   cursor: pointer;
 `;
 
-export const PasswordHint = styled.p`
+export const ErrorText = styled.p`
   font-size: 14px;
-  color: #666;
+  color: red;
   margin-top: 5px;
   text-align: left;
 `;
@@ -118,4 +119,15 @@ export const LogoText = styled.h1`
   font-weight: bold;
   color: #0066cc;
   margin-bottom: 10px;
+`;
+
+export const ToggleText = styled.p`
+  font-size: 16px;
+  color: #0066cc;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 10px;
+  &:hover {
+    text-decoration: underline;
+  }
 `;

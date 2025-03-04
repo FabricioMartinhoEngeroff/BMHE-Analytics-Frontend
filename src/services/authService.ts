@@ -2,7 +2,7 @@ import { api } from "../api/api";
 import { handleApiError } from "../utils/handleApiError";
 
 interface RegisterUserData {
-  login: string;
+  name: string;
   email: string;
   password: string;
   cpf: string;

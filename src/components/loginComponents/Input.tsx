@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ChangeEvent } from "react";
 
-const InputField = styled.input`
+const StyledInput = styled.input`
   width: 100%;
   padding: 12px;
   margin-top: 8px;
@@ -26,7 +26,7 @@ export function Input({
   onChange,
 }: InputProps) {
   return (
-    <InputField
+    <StyledInput
       type={type}
       placeholder={placeholder}
       name={name}

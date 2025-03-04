@@ -1,7 +1,7 @@
 import { createContext, useState, ReactNode } from "react";
 import { login as authLogin } from "../services/authService";
 import { fetchAuthenticatedUser } from "../services/userService";
-import { User } from "../types/User"; // 🔥 Importamos a interface User
+import { User } from "../types/User"; 
 
 interface AuthContextType {
   user: User | null;
@@ -21,7 +21,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem("token", data.token);
   
       try {
-        const userData = await fetchAuthenticatedUser(); // 🔥 Agora busca direto do backend
+        const userData = await fetchAuthenticatedUser(); 
         if (userData) {
           setUser(userData); 
         }
