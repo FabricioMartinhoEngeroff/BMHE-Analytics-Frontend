@@ -48,6 +48,7 @@ export async function register(userData: RegisterUserData) {
     console.log("✅ Cadastro realizado com sucesso:", response.data);
     return response.data;
   } catch (error) {
+    console.error("❌ Erro durante o cadastro:", error);
     handleApiError(error, "Erro ao cadastrar usuário.");
   }
 }

@@ -6,9 +6,7 @@ import {
   RightPanel,
   LoginBox,
   FormContainer,
-  InputField,
   Footer,
-  ErrorText,
 } from "../../styles/GlobalStyles";
 
 export function Login() {
@@ -28,6 +26,7 @@ export function Login() {
         <form onSubmit={handleSubmit}>
           <FormContainer>
             <FormField
+              id="email"
               icon={FaEnvelope}
               type="email"
               placeholder="E-mail"
@@ -36,33 +35,39 @@ export function Login() {
               onChange={handleChange}
               error={errors.email}
             />
-    
-            <InputField isError={!!errors.password}>
-              <FaLock />
-              <input
-                type={passwordVisible ? "text" : "password"}
-                placeholder="Senha"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-              <span
-                className="toggle-visibility"
-                onClick={togglePasswordVisibility}
-              >
-                {passwordVisible ? <FaEyeSlash /> : <FaEye />}
-              </span>
-            </InputField>
-            {errors.password && <ErrorText>{errors.password}</ErrorText>}
+
+            <FormField
+              id="password"
+              icon={FaLock}
+              type={passwordVisible ? "text" : "password"}
+              placeholder="Senha"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              error={errors.password}
+            />
+
+            <span
+              className="toggle-visibility"
+              onClick={togglePasswordVisibility}
+              style={{ cursor: "pointer" }}
+            >
+              {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </FormContainer>
+
           <Button text="Entrar" />
         </form>
+
         <Footer>
-          <span onClick={() => window.dispatchEvent(new Event('toggleRegister'))} style={{ marginLeft: "5px", color: "#0066cc", cursor: "pointer" }}>
-          Já tem uma conta? Criar conta.
+          <span
+            onClick={() => window.dispatchEvent(new Event("toggleRegister"))}
+            style={{ marginLeft: "5px", color: "#0066cc", cursor: "pointer" }}
+          >
+            Já tem uma conta? Criar conta.
           </span>
         </Footer>
       </LoginBox>
-    </RightPanel>  
+    </RightPanel>
   );
 }

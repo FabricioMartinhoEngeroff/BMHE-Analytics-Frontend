@@ -1,7 +1,12 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
+interface ChartData {
+  name: string;
+  [key: string]: string | number; 
+}
+
 interface ChartProps {
-  data: Array<{ name: string } & Record<string, number>>; 
+  data: ChartData[];
   colors?: string[];
 }
 

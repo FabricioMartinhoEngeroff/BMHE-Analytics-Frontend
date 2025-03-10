@@ -56,7 +56,6 @@ export const LoginBox = styled.div`
   text-align: center;
 `;
 
-
 export const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -70,17 +69,18 @@ export const Row = styled.div`
   width: 100%;
 `;
 
-export const InputField = styled.div<{ isError?: boolean }>`
+export const InputField = styled.div<{ $hasError?: boolean }>`
   display: flex;
   align-items: center;
-  border: 1px solid ${({ isError }) => (isError ? "red" : "#ccc")};
+  border: 2px solid ${({ $hasError }) => ($hasError ? "red" : "#ccc")};
   border-radius: 6px;
   padding: 12px;
-  background: white;
+  background: #fff;
   font-size: 18px;
   width: 100%;
   box-sizing: border-box;
   position: relative;
+  transition: border 0.3s ease;
 
   input {
     border: none;
@@ -89,14 +89,23 @@ export const InputField = styled.div<{ isError?: boolean }>`
     padding: 8px;
     font-size: 16px;
     width: 100%;
+    background: transparent;
   }
 
   svg {
     margin-right: 8px;
-    color: #0066cc;
+    color: ${({ $hasError }) => ($hasError ? "red" : "#0066cc")};
     font-size: 20px;
+    transition: color 0.3s ease;
+  }
+
+  &:focus-within {
+    border: 2px solid ${({ $hasError }) => ($hasError ? "red" : "#0066cc")};
+    box-shadow: ${({ $hasError }) =>
+      $hasError ? "0 0 5px rgba(255, 0, 0, 0.5)" : "0 0 5px rgba(0, 102, 204, 0.5)"};
   }
 `;
+
 
 export const Footer = styled.div`
   margin-top: 20px; // Increased margin-top

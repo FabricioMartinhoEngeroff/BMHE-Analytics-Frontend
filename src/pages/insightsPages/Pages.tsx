@@ -7,18 +7,34 @@ import { getInsightsData } from "../../services/insightsService";
 import "../../styles/insightStyle.css";
 
 export const InsightsPage: React.FC = () => {
-  const [chartData, setChartData] = useState<{ name: string; [key: string]: number }[]>([]);
+  const [chartData, setChartData] = useState<Array<{ name: string; vendas: number; lucro: number; clientes: number }>>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       const data = await getInsightsData();
-      setChartData(data);
+  
+      interface InsightData {
+        name: string;
+        vendas: number;
+        lucro: number;
+        clientes: number;
+      }
+
+      const formattedData: InsightData[] = data.map((item: Partial<InsightData>) => ({
+        name: item.name!,
+        vendas: item.vendas ?? 0,
+        lucro: item.lucro ?? 0,
+        clientes: item.clientes ?? 0,
+      }));
+  
+      setChartData(formattedData);
       setLoading(false);
     }
-
+  
     fetchData();
   }, []);
+  
 
   return (
     <div className="insights-container">

@@ -23,3 +23,4 @@ export function handleApiError(error: unknown, defaultMessage: string) {
 
   throw error;
 }
+

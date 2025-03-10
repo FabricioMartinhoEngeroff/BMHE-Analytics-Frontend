@@ -1,5 +1,5 @@
 import { GlobalStyles } from "./styles/GlobalStyles";
-import { AppRoutes } from "./route/AppRoutes"; 
+import { AppRoutes } from "./route/AppRoutes";  
 import { AuthProvider } from "./contexts/AuthProvider";
 
 function App() {

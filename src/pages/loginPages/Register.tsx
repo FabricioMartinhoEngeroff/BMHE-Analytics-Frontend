@@ -19,9 +19,7 @@ import {
   LoginBox,
   FormContainer,
   Row,
-  InputField,
   Footer,
-  ErrorText,
 } from "../../styles/GlobalStyles";
 
 export function Register() {
@@ -42,6 +40,7 @@ export function Register() {
           <FormContainer>
             <Row>
               <FormField
+                id="email"
                 icon={FaEnvelope}
                 type="email"
                 placeholder="E-mail"
@@ -51,6 +50,7 @@ export function Register() {
                 error={errors?.email}
               />
               <FormField
+                id="name"
                 icon={FaUser}
                 type="text"
                 placeholder="Usuário"
@@ -60,8 +60,10 @@ export function Register() {
                 error={errors?.name}
               />
             </Row>
+
             <Row>
               <FormField
+                id="telefone"
                 icon={FaPhone}
                 type="text"
                 placeholder="Telefone"
@@ -71,6 +73,7 @@ export function Register() {
                 error={errors?.telefone}
               />
               <FormField
+                id="cpf"
                 icon={FaIdCard}
                 type="text"
                 placeholder="CPF"
@@ -80,8 +83,10 @@ export function Register() {
                 error={errors?.cpf}
               />
             </Row>
+
             <Row>
               <FormField
+                id="endereco_rua"
                 icon={FaMapMarkerAlt}
                 type="text"
                 placeholder="Rua"
@@ -91,6 +96,7 @@ export function Register() {
                 error={errors?.endereco?.rua}
               />
               <FormField
+                id="endereco_bairro"
                 icon={FaBuilding}
                 type="text"
                 placeholder="Bairro"
@@ -100,8 +106,10 @@ export function Register() {
                 error={errors?.endereco?.bairro}
               />
             </Row>
+
             <Row>
               <FormField
+                id="endereco_cidade"
                 icon={FaCity}
                 type="text"
                 placeholder="Cidade"
@@ -111,6 +119,7 @@ export function Register() {
                 error={errors?.endereco?.cidade}
               />
               <FormField
+                id="endereco_estado"
                 icon={FaGlobeAmericas}
                 type="text"
                 placeholder="Estado"
@@ -120,8 +129,10 @@ export function Register() {
                 error={errors?.endereco?.estado}
               />
             </Row>
+
             <Row>
               <FormField
+                id="endereco_cep"
                 icon={FaBuilding}
                 type="text"
                 placeholder="CEP"
@@ -130,30 +141,32 @@ export function Register() {
                 onChange={handleChange}
                 error={errors?.endereco?.cep}
               />
-              <InputField isError={!!errors?.password}>
-                <FaLock />
-                <input
-                  type={passwordVisible ? "text" : "password"}
-                  placeholder="Senha"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
-                <span
-                  className="toggle-visibility"
-                  onClick={togglePasswordVisibility}
-                >
-                  {passwordVisible ? <FaEyeSlash /> : <FaEye />}
-                </span>
-              </InputField>
+              <FormField
+                id="password"
+                icon={FaLock}
+                type={passwordVisible ? "text" : "password"}
+                placeholder="Senha"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                error={errors?.password}
+              />
+              <span
+                className="toggle-visibility"
+                onClick={togglePasswordVisibility}
+                style={{ cursor: "pointer" }}
+              >
+                {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+              </span>
             </Row>
-            {errors?.password && <ErrorText>{errors.password}</ErrorText>}
           </FormContainer>
+
           <Button text="Cadastrar" />
         </form>
+
         <Footer>
           <span onClick={() => window.dispatchEvent(new Event("toggleRegister"))}>
-          Já possui uma conta? Faça login...
+            Já possui uma conta? Faça login...
           </span>
         </Footer>
       </LoginBox>
