@@ -11,8 +11,6 @@ import {
   FaGlobeAmericas,
   FaBuilding,
   FaLock,
-  FaEye,
-  FaEyeSlash,
 } from "react-icons/fa";
 import {
   RightPanel,
@@ -23,14 +21,7 @@ import {
 } from "../../styles/GlobalStyles";
 
 export function Register() {
-  const {
-    formData,
-    passwordVisible,
-    togglePasswordVisibility,
-    handleChange,
-    handleSubmit,
-    errors,
-  } = useLoginForm();
+  const { formData, handleChange, handleSubmit, errors } = useLoginForm();
 
   return (
     <RightPanel>
@@ -39,6 +30,16 @@ export function Register() {
         <form onSubmit={handleSubmit}>
           <FormContainer>
             <Row>
+              <FormField
+                id="name"
+                icon={FaUser}
+                type="text"
+                placeholder="Nome completo"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                error={errors?.name}
+              />
               <FormField
                 id="email"
                 icon={FaEnvelope}
@@ -49,29 +50,9 @@ export function Register() {
                 onChange={handleChange}
                 error={errors?.email}
               />
-              <FormField
-                id="name"
-                icon={FaUser}
-                type="text"
-                placeholder="Usuário"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                error={errors?.name}
-              />
             </Row>
 
             <Row>
-              <FormField
-                id="telefone"
-                icon={FaPhone}
-                type="text"
-                placeholder="Telefone"
-                name="telefone"
-                value={formData.telefone}
-                onChange={handleChange}
-                error={errors?.telefone}
-              />
               <FormField
                 id="cpf"
                 icon={FaIdCard}
@@ -82,6 +63,16 @@ export function Register() {
                 onChange={handleChange}
                 error={errors?.cpf}
               />
+              <FormField
+                id="telefone"
+                icon={FaPhone}
+                type="text"
+                placeholder="Telefone"
+                name="telefone"
+                value={formData.telefone}
+                onChange={handleChange}
+                error={errors?.telefone}
+              />
             </Row>
 
             <Row>
@@ -91,7 +82,7 @@ export function Register() {
                 type="text"
                 placeholder="Rua"
                 name="endereco.rua"
-                value={formData.endereco?.rua}
+                value={formData.endereco.rua}
                 onChange={handleChange}
                 error={errors?.endereco?.rua}
               />
@@ -101,7 +92,7 @@ export function Register() {
                 type="text"
                 placeholder="Bairro"
                 name="endereco.bairro"
-                value={formData.endereco?.bairro}
+                value={formData.endereco.bairro}
                 onChange={handleChange}
                 error={errors?.endereco?.bairro}
               />
@@ -114,7 +105,7 @@ export function Register() {
                 type="text"
                 placeholder="Cidade"
                 name="endereco.cidade"
-                value={formData.endereco?.cidade}
+                value={formData.endereco.cidade}
                 onChange={handleChange}
                 error={errors?.endereco?.cidade}
               />
@@ -124,7 +115,7 @@ export function Register() {
                 type="text"
                 placeholder="Estado"
                 name="endereco.estado"
-                value={formData.endereco?.estado}
+                value={formData.endereco.estado}
                 onChange={handleChange}
                 error={errors?.endereco?.estado}
               />
@@ -137,27 +128,21 @@ export function Register() {
                 type="text"
                 placeholder="CEP"
                 name="endereco.cep"
-                value={formData.endereco?.cep}
+                value={formData.endereco.cep}
                 onChange={handleChange}
                 error={errors?.endereco?.cep}
               />
               <FormField
                 id="password"
                 icon={FaLock}
-                type={passwordVisible ? "text" : "password"}
+                type="password"
                 placeholder="Senha"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 error={errors?.password}
+                isPasswordField
               />
-              <span
-                className="toggle-visibility"
-                onClick={togglePasswordVisibility}
-                style={{ cursor: "pointer" }}
-              >
-                {passwordVisible ? <FaEyeSlash /> : <FaEye />}
-              </span>
             </Row>
           </FormContainer>
 
@@ -165,7 +150,9 @@ export function Register() {
         </form>
 
         <Footer>
-          <span onClick={() => window.dispatchEvent(new Event("toggleRegister"))}>
+          <span
+            onClick={() => window.dispatchEvent(new Event("toggleRegister"))}
+          >
             Já possui uma conta? Faça login...
           </span>
         </Footer>

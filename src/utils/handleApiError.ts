@@ -1,26 +1,24 @@
 import axios from "axios";
 
-export function handleApiError(error: unknown, defaultMessage: string) {
+export function handleApiError(error: unknown, defaultMessage: string): void {
   console.error("🚨 Erro na API:", error);
 
-  if (axios.isAxiosError(error)) {
-    console.log("📥 Resposta do servidor:", error.response);
+  let message = defaultMessage;
 
+  if (axios.isAxiosError(error)) {
     if (error.response) {
       console.error(`❌ Código de status: ${error.response.status}`);
       console.error("📝 Dados da resposta:", error.response.data);
+      message = error.response.data?.message || defaultMessage;
     } else if (error.request) {
       console.error("⚠️ Nenhuma resposta recebida do servidor");
     }
-
-    alert(error.response?.data?.message || defaultMessage);
   } else if (error instanceof Error) {
     console.error("Erro desconhecido:", error.message);
-    alert(error.message || defaultMessage);
-  } else {
-    alert(defaultMessage);
+    message = error.message;
   }
+
+  alert(message);
 
   throw error;
 }
-

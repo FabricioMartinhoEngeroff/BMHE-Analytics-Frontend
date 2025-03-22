@@ -1,8 +1,8 @@
 import validationErrors from "./validationErrors";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const cpfRegex = /^\d{11}$/; // Valida apenas 11 dígitos
-const phoneRegex = /^\d{10,11}$/; // Valida 10 ou 11 dígitos (DDD + número)
+const cpfRegex = /^\d{11}$/;
+const phoneRegex = /^\d{10,11}$/;
 const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$/;
 
 export function validateEmail(email: string): string | null {
@@ -13,17 +13,15 @@ export function validateEmail(email: string): string | null {
 
 export function validateCPF(cpf: string): string | null {
   if (!cpf) return validationErrors.required;
-  const numbers = cpf.replace(/\D/g, ""); // Remove tudo que não é dígito
+  const numbers = cpf.replace(/\D/g, "");
   if (!cpfRegex.test(numbers)) return validationErrors.invalidCPF;
-  // Adicione aqui a lógica de validação de CPF (opcional, se necessário)
   return null;
 }
 
 export function validatePhone(phone: string): string | null {
   if (!phone) return validationErrors.required;
-  const numbers = phone.replace(/\D/g, ""); // Remove tudo que não é dígito
+  const numbers = phone.replace(/\D/g, "");
   if (!phoneRegex.test(numbers)) return validationErrors.invalidPhone;
-  // Adicione aqui a lógica de validação de telefone (opcional, se necessário)
   return null;
 }
 
@@ -34,21 +32,17 @@ export function validatePassword(password: string): string | null {
   return null;
 }
 
-export function validateEmptyFields(fields: Record<string, any>): string | null {
-  console.log("🔍 Validando campos:", fields); 
-
+export function validateEmptyFields(fields: Record<string, any>, parentKey = ""): string | null {
   for (const [key, value] of Object.entries(fields)) {
-    if (typeof value === "object") {
-      const nestedError = validateEmptyFields(value);
+    const fullKey = parentKey ? `${parentKey}.${key}` : key;
+    if (typeof value === "object" && value !== null) {
+      const nestedError = validateEmptyFields(value, fullKey);
       if (nestedError) {
-        console.warn(`❌ Erro no campo aninhado: ${key}.${nestedError}`);
-        return `${key}.${nestedError}`;
+        return nestedError;
       }
-    } else if (!value || !value.trim()) {
-      console.warn(`❌ Campo vazio detectado: ${key}`);
-      return `${key} - Este campo é obrigatório`;
+    } else if (!value?.trim()) {
+      return `${fullKey} - Este campo é obrigatório`;
     }
   }
-  console.log("✅ Todos os campos estão preenchidos corretamente.");
   return null;
 }

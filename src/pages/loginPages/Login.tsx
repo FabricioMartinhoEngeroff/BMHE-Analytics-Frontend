@@ -1,7 +1,7 @@
 import { useLoginForm } from "../../hooks/UseLoginForm";
 import { Button } from "../../components/loginComponents/Button";
 import { FormField } from "../../components/loginComponents/FormField";
-import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEnvelope, FaLock } from "react-icons/fa";
 import {
   RightPanel,
   LoginBox,
@@ -12,8 +12,6 @@ import {
 export function Login() {
   const {
     formData,
-    passwordVisible,
-    togglePasswordVisibility,
     handleChange,
     handleSubmit,
     errors,
@@ -39,21 +37,14 @@ export function Login() {
             <FormField
               id="password"
               icon={FaLock}
-              type={passwordVisible ? "text" : "password"}
+              type="password"
               placeholder="Senha"
               name="password"
               value={formData.password}
               onChange={handleChange}
               error={errors.password}
+              isPasswordField={true} 
             />
-
-            <span
-              className="toggle-visibility"
-              onClick={togglePasswordVisibility}
-              style={{ cursor: "pointer" }}
-            >
-              {passwordVisible ? <FaEyeSlash /> : <FaEye />}
-            </span>
           </FormContainer>
 
           <Button text="Entrar" />
